@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}<title>Authenticate</title>{% endblock %}
+
+{% block content %}
+    {% include 'navbar.html' %}
+    <h1>AUTHENTICATION</h1>
+    <form action="" method="post">{% csrf_token %}
+        <label for="password">password</label>
+        <input type="password" name="password" value="" required>
+        <input type="submit" value="save">
+    </form>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% endblock %}

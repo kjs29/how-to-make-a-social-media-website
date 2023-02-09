@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}<title>MakeYourBed</title>{% endblock %}
+
+{% block content %}
+    {% include 'navbar.html' %}
+
+    <div>Total {{ users.count }} users have signed up so far!</div>
+
+    <p>Username(ID) : {% for each in users %} <a href="{% url 'profile' each.pk %}">{{each.username}}</a> / {% endfor %} </p>
+    <hr>
+    
+    <h2><a href="{% url 'create' %}"><strong>Create Post</strong></a>- Only logged in users can create posts </h2>
+    <p>Total Posts : {{ posts.count }}<hr></p>
+
+    {% for post in posts %}
+        <div>
+        
+        <a href="{% url 'detail' post.pk %}"><strong>{{post.title}}</strong></a>
+        
+        <a href="{% url 'like_post' post.pk  %}">
+        {% if user in post.likes.all %}
+            <span style="color: red;"> ♥︎ </span>
+        {% else %}
+            <span style="color: gray;"> ♡ </span>
+        {% endif %}
+        </a>
+        <a href="{% url 'detail' post.pk %}">({{post.likes.count}} like{{post.likes.count|pluralize}} / {{post.comment_set.all.count}} comment{{post.comment_set.all.count|pluralize}} )</a>
+        - {{post.user}} {{post.created_date}}
+        </div> <hr>
+    {% endfor %}
+{% endblock %}

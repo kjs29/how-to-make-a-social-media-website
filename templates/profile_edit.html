@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}<title>Edit Profile</title>{% endblock %}
+
+{% block content %}
+    {% include "navbar.html" %}
+    <h1>Edit Profile</h1>
+    {% if request.user.is_authenticated %}
+        <form action="" method="post">{% csrf_token %}
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" value="{{username}}">
+            <input type="submit" name="validate-username" value="validate-username"><br>
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" value="{{request.user.email}}"><br>
+            
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" value="{{password}}">
+            <input type="submit" name="save" value="save">
+        </form>
+    {% endif %}
+{% endblock %}

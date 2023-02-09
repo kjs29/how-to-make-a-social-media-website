@@ -36,6 +36,8 @@ def login_view(request):
                     login(request, user)
 
                     return redirect(request.META.get("HTTP_REFERER", "home"), )
+                else:
+                    messages.error(request, "Choose different Username or(and) Password")
 
         # when login button is clicked
         elif 'loginuser' in request.POST:
@@ -44,7 +46,8 @@ def login_view(request):
                 login(request, user)
     
                 return redirect(request.META.get("HTTP_REFERER", "home"), )
-                
+            messages.error(request, "Invalid Username or(and) Password") 
+
         return redirect(request.META.get("HTTP_REFERER", "home"), )
     
     # when request.method == "GET"
@@ -104,7 +107,7 @@ def edit_view(request,pk):
 
     return render(request, "detail.html", {'post':post,})
 
-def like_post(request, pk):
+def like_post_view(request, pk):
     """Like post view"""
 
     post = get_object_or_404(Post, pk=pk)
@@ -214,7 +217,7 @@ def profile_edit_view(request, pk):
 
     return render(request, 'profile_edit.html', {'pk':request.user.pk, 'username':user.username, })
 
-def comment(request, pk):
+def comment_view(request, pk):
     """Comment on post view"""
 
     post = get_object_or_404(Post, pk=pk)
@@ -228,7 +231,7 @@ def comment(request, pk):
     
     return render(request, "detail.html",{"pk":pk})
 
-def delete_comment(request, pk_post, pk_comment):
+def delete_comment_view(request, pk_post, pk_comment):
     """Delete comment view"""
 
     comment = Comment.objects.get(pk=pk_comment)
@@ -237,7 +240,7 @@ def delete_comment(request, pk_post, pk_comment):
         
     return redirect('detail', pk=pk_post)
 
-def delete_user(request, pk):
+def delete_user_view(request, pk):
     """Delete user view"""
 
     user = get_object_or_404(User, pk = pk)
@@ -246,7 +249,7 @@ def delete_user(request, pk):
     
     return redirect('home', )
 
-def delete_post(request, pk):
+def delete_post_view(request, pk):
     """delete post view"""
     
     post = Post.objects.get(pk=pk)

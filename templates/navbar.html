@@ -9,14 +9,17 @@
     {% else %}
     <form action="{% url 'login' %}" method="post">{% csrf_token %}
         <strong>Login</strong>/ <strong>sign up</strong>
-        <label for="username">username :</label>
+        <label for="username">username : </label>
         <input type="text" name="username" id="username" value="" required>
 
-        <label for="password">password</label>
+        <label for="password">password : </label>
         <input type="password" name="password" id="password" value="" required>
 
         <input type="submit" name="loginuser" value="login">
         <input type="submit" name = "signupuser" value="signup">
     </form>
+    {% for message in messages %}
+        {{message}}
+    {% endfor %}
     {% endif %}
     <hr>

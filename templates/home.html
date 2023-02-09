@@ -26,7 +26,7 @@
         {% endif %}
         </a>
         <a href="{% url 'detail' post.pk %}">({{post.likes.count}} like{{post.likes.count|pluralize}} / {{post.comment_set.all.count}} comment{{post.comment_set.all.count|pluralize}} )</a>
-        - {{post.user}} {{post.created_date}}
+        - <a href="{% url 'profile' post.user.pk %}">{{post.user}}</a> {{post.created_date}}
         </div> <hr>
     {% endfor %}
 {% endblock %}

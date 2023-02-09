@@ -236,3 +236,12 @@ def delete_comment(request, pk_post, pk_comment):
         comment.delete()
         
     return redirect('detail', pk=pk_post)
+
+def delete_user(request, pk):
+    """Delete user view"""
+
+    user = get_object_or_404(User, pk = pk)
+    if request.user.pk == user.pk and request.user.is_authenticated:
+        user.delete()
+    
+    return redirect('home', )

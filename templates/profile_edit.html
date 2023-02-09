@@ -24,5 +24,7 @@
             <input type="password" name="password" id="password" value="{{password}}">
             <input type="submit" name="save" value="save">
         </form>
+        <hr>
+        <a href="{% url 'delete_user' request.user.pk %}" style="color: red;">Delete my account</a> (Warning : You can't undo this action.)
     {% endif %}
 {% endblock %}

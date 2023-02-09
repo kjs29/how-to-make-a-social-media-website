@@ -27,7 +27,10 @@
 
     {% if user.username == post.user.username %}
         <a href="{% url 'edit' post.pk %}">Edit post</a>
+        <a href="{% url 'delete_post' post.pk %}">Delete post</a>
     {% endif %}
+
+
     <hr><h1>Comment</h1>
     {% for comment in comments %}
         <p style="border: solid 1px gray">{{comment.body}} /
@@ -43,6 +46,8 @@
         <textarea type="text" id="comment" name="body">{{comment}}</textarea>
         <input type="submit" value="submit">
     </form>
+
+
 
     <!-- <form action="">
         <label for="userstatus">User Status</label>

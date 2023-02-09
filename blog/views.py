@@ -245,3 +245,12 @@ def delete_user(request, pk):
         user.delete()
     
     return redirect('home', )
+
+def delete_post(request, pk):
+    """delete post view"""
+    
+    post = Post.objects.get(pk=pk)
+    if request.user == post.user and request.user.is_authenticated:
+        post.delete()
+    
+    return redirect('home', )

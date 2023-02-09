@@ -54,6 +54,8 @@
 
         - Deleting comment
 
+        - Deleting user
+
 ## More updates to add
 
 - Users private messaging
@@ -64,7 +66,7 @@
 
 - Replying to comment
 
-- Following
+- Follower / Following list
 
 - Suggesting users
 

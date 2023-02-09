@@ -6,6 +6,7 @@ a.py
 
 # Env
 .env
+.venv
 myvenv/
 venv/
 env

@@ -55,6 +55,8 @@
     
     - Delete
 
+        - Deleting post's photo
+
         - Deleting comment
 
         - Deleting user
@@ -75,6 +77,8 @@
 
 - ~~Uploading images~~
 
-- Users deleting their own accounts
+- ~~Users deleting their own accounts~~
 
 - Deploying a website
+
+- Allowing users to download files

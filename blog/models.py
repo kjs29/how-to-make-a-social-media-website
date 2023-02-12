@@ -8,6 +8,7 @@ class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField()
     photo = models.ImageField(null=True, blank=True)
+    original_filename = models.CharField(max_length=255, null=True, blank=True)
     likes = models.ManyToManyField(User, related_name="blog_post", blank=True)
     created_date = models.DateTimeField(auto_now_add=timezone.now)
 

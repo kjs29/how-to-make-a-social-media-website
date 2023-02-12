@@ -6,7 +6,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.contrib import messages
 from django.conf import settings
-import os
+import os, shutil
+
 
 def home(request):
     """Home page view"""
@@ -82,7 +83,7 @@ def create_view(request):
         if request.method == "POST":
             title=request.POST['title']
             body=request.POST['body']
-            file=request.FILES['file']
+            file=request.FILES.get('file')
             folder_path=os.path.join(settings.MEDIA_ROOT, 'images', user.username)
             if not os.path.exists(folder_path):
                 os.mkdir(folder_path)
@@ -91,7 +92,9 @@ def create_view(request):
                     for chunk in file.chunks():
                         f.write(chunk)
                 file_path = os.path.join('images', user.username, title)
-            post = Post(title=title, body=body, user=user, photo=file_path)
+                post = Post(title=title, body=body, user=user, photo=file_path, original_filename=file.name)
+            else:
+                post = Post(title=title, body=body, user=user)
             post.save()
 
             return redirect('detail', pk=post.pk)
@@ -103,18 +106,32 @@ def create_view(request):
 def edit_view(request,pk):
     """Edit post view"""
 
-    post = Post.objects.get(pk=pk)
+    post = get_object_or_404(Post, pk=pk)
     if post.user.pk == request.user.pk:
         if request.method == "POST":
             title = request.POST['title']
             body = request.POST['body']
+            file = request.FILES.get('file')
+            folder_path=os.path.join(settings.MEDIA_ROOT, 'images', post.user.username)
+            if not os.path.exists(folder_path):
+                os.mkdir(folder_path)
+            if file:
+                post.photo.delete()
+                with open(os.path.join(folder_path, title), "wb+") as f:
+                    for chunk in file.chunks():
+                        f.write(chunk)
+                file_path = os.path.join('images', post.user.username, title)
+                post.photo = file_path
+                post.original_filename = file.name
             post.title = title
             post.body = body
+            
             post.save()
-
+            
             return redirect('detail', pk=pk)
 
-        return render(request, "edit.html", {'post':post})
+        original_filename = post.original_filename
+        return render(request, "edit.html", {'post':post, 'original_filename':original_filename})
 
     return render(request, "detail.html", {'post':post,})
 
@@ -252,19 +269,34 @@ def delete_comment_view(request, pk_post, pk_comment):
     return redirect('detail', pk=pk_post)
 
 def delete_user_view(request, pk):
-    """Delete user view"""
+    """
+    Delete user view
+    - delete posts, comments, image files uploaded by user
+    """
 
     user = get_object_or_404(User, pk = pk)
     if request.user.pk == user.pk and request.user.is_authenticated:
         user.delete()
+        directory = os.path.join(settings.MEDIA_ROOT, 'images')
+        if user.username in directory:
+            shutil.rmtree(os.path.join(directory, user.username))
     
     return redirect('home', )
 
 def delete_post_view(request, pk):
-    """delete post view"""
+    """Delete post view"""
     
     post = Post.objects.get(pk=pk)
     if request.user == post.user and request.user.is_authenticated:
+        post.photo.delete()
         post.delete()
-    
+
     return redirect('home', )
+
+def delete_photo_view(request, pk):
+    """Delete post photo view"""
+
+    post = get_object_or_404(Post, pk=pk)
+    post.photo.delete()
+
+    return redirect('edit', pk=pk)

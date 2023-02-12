@@ -70,7 +70,7 @@
 
 - Suggesting users
 
-- Uploading images
+- ~~Uploading images~~
 
 - Users deleting their own accounts
 

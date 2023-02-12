@@ -5,6 +5,8 @@ from .models import Post, Comment
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.contrib import messages
+from django.conf import settings
+import os
 
 def home(request):
     """Home page view"""
@@ -68,7 +70,7 @@ def detail_view(request,pk):
     """Post detail view"""
 
     post = Post.objects.get(pk=pk)
-    comments = post.comment_set.all()
+    comments = post.comment_set.all().order_by('-created_date')
     
     return render(request, 'detail.html', {'post':post, 'comments':comments})
 
@@ -80,7 +82,16 @@ def create_view(request):
         if request.method == "POST":
             title=request.POST['title']
             body=request.POST['body']
-            post = Post(title=title, body=body, user=user)
+            file=request.FILES['file']
+            folder_path=os.path.join(settings.MEDIA_ROOT, 'images', user.username)
+            if not os.path.exists(folder_path):
+                os.mkdir(folder_path)
+            if file:
+                with open(os.path.join(folder_path, title), "wb+") as f:
+                    for chunk in file.chunks():
+                        f.write(chunk)
+                file_path = os.path.join('images', user.username, title)
+            post = Post(title=title, body=body, user=user, photo=file_path)
             post.save()
 
             return redirect('detail', pk=post.pk)

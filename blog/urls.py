@@ -15,5 +15,4 @@ urlpatterns = [
     path('profile/delete/<int:pk>/', views.delete_user_view, name= 'delete_user'),
     path('comment/<int:pk>/', views.comment_view, name='comment'),
     path('comment/delete/<int:pk_post>/<int:pk_comment>/', views.delete_comment_view, name='delete_comment'),
-    
 ]

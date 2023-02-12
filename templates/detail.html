@@ -17,10 +17,13 @@
         - {{post.likes.count}} like{{post.likes.count|pluralize}} - 
 
     
-    ({% for each_user in post.likes.all %}
+        ({% for each_user in post.likes.all %}
             <a href="{% url 'profile' each_user.pk %}">{{each_user.username}}</a> /
         {% endfor %})
     </h1>
+    {% if post.photo %}
+        <img src="{{post.photo.url}}" alt="" style="width: 600px;"><br>
+    {% endif %}
     <p>{{post.body|linebreaks}}</p>
     <h3>Created at {{post.created_date}}</h3>
     Posted by <a href="{% url 'profile' post.user.pk %}">{{post.user}}</a>

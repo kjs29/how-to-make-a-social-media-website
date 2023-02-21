@@ -14,7 +14,7 @@
 
 ### Technical Objective
 
-- To familiarize with Django Web Framework
+- To familiarize with Django Web Framework (Back End)
 
 ## Key techniques implemented
 

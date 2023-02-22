@@ -23,8 +23,6 @@ migrations/
 # Static folder at project root
 /static/
 
-/media/images/
-
 
 # macOS
 ._*

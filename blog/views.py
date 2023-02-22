@@ -84,11 +84,14 @@ def create_view(request):
             title=request.POST['title']
             body=request.POST['body']
             file=request.FILES.get('file')
-            folder_path=os.path.join(settings.MEDIA_ROOT, 'images', user.username)
-            if not os.path.exists(folder_path):
-                os.mkdir(folder_path)
+            image_folder = os.path.join(os.path.join(settings.MEDIA_ROOT,'images'))
+            each_user_folder_path=os.path.join(settings.MEDIA_ROOT, 'images', user.username)
+            if not os.path.exists(each_user_folder_path):
+                if not os.path.exists(image_folder):
+                    os.mkdir(image_folder)
+                os.mkdir(each_user_folder_path)
             if file:
-                with open(os.path.join(folder_path, title), "wb+") as f:
+                with open(os.path.join(each_user_folder_path, title), "wb+") as f:
                     for chunk in file.chunks():
                         f.write(chunk)
                 file_path = os.path.join('images', user.username, title)
@@ -112,12 +115,15 @@ def edit_view(request,pk):
             title = request.POST['title']
             body = request.POST['body']
             file = request.FILES.get('file')
-            folder_path=os.path.join(settings.MEDIA_ROOT, 'images', post.user.username)
-            if not os.path.exists(folder_path):
-                os.mkdir(folder_path)
+            image_folder = os.path.join(os.path.join(settings.MEDIA_ROOT,'images'))
+            each_user_folder_path=os.path.join(settings.MEDIA_ROOT, 'images', post.user.username)
+            if not os.path.exists(each_user_folder_path):
+                if not os.path.exists(image_folder):
+                    os.mkdir(image_folder)
+                os.mkdir(each_user_folder_path)
             if file:
                 post.photo.delete()
-                with open(os.path.join(folder_path, title), "wb+") as f:
+                with open(os.path.join(each_user_folder_path, title), "wb+") as f:
                     for chunk in file.chunks():
                         f.write(chunk)
                 file_path = os.path.join('images', post.user.username, title)

@@ -3,8 +3,8 @@
     <!-- User sign up & Login -->
     {% if request.user.is_authenticated %}
         <h2>Welcome, {{request.user.username}}!
-        <a href="{% url 'profile' request.user.pk %}">My Profile</a>
-        <a href="{% url 'create' %}">Create a post</a>
+        <a href="{% url 'profile' request.user.pk %}">My Profile</a> / 
+        <a href="{% url 'create' %}">Create a post</a> / 
         <a href="{% url 'logout' %}">Logout</a></h2>
     {% else %}
     <form action="{% url 'login' %}" method="post">{% csrf_token %}

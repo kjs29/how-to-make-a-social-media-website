@@ -5,31 +5,38 @@
 {% block content %}
     {% include 'navbar.html' %}
 
+    <h1>"If you want to change the world, start off by making your bed" <br> </h1>- Admiral William H. McRaven <hr>
+
+    <h2><a href="{% url 'create' %}"><strong>Change the world</strong></a>- Make your bed and share it on here together! (Log in required)</h2>
+
     <div>Total {{ users.count }} users have signed up so far!</div>
 
-    <p>Username(ID) : {% for each in users %} <a href="{% url 'profile' each.pk %}">{{each.username}}</a> / {% endfor %} </p>
+    <p>Dreamers : {% for each in users %} <a href="{% url 'profile' each.pk %}">{{each.username}}</a> / {% endfor %} </p><hr>
+    
+    <h2>Total Posts : {{ posts.count }}</h2>
+    
     <hr>
     
-    <h2><a href="{% url 'create' %}"><strong>Create Post</strong></a>- Only logged in users can create posts </h2>
-    <p>Total Posts : {{ posts.count }}<hr></p>
 
     {% for post in posts %}
         <div>
         
+        <h2>
+            <a href="{% url 'detail' post.pk %}"><strong>Title : {{post.title}}</strong></a><a href="{% url 'detail' post.pk %}"> ({{post.likes.count}} like{{post.likes.count|pluralize}} / {{post.comment_set.all.count}} comment{{post.comment_set.all.count|pluralize}} )</a>
+            <a href="{% url 'like_post' post.pk  %}">
+                {% if user in post.likes.all %}
+                    <span style="color: red;"> ♥︎ </span>
+                {% else %}
+                    <span style="color: gray;"> ♡ </span>
+                {% endif %}
+            </a>
+        </h2>
         {% if post.photo %}
             <a href="{% url 'detail' post.pk %}"><img src="{{post.photo.url}}" alt="" style="width: 200px;"></a><br>
         {% endif %}
-
-        <a href="{% url 'detail' post.pk %}"><strong>{{post.title}}</strong></a>
         
-        <a href="{% url 'like_post' post.pk  %}">
-        {% if user in post.likes.all %}
-            <span style="color: red;"> ♥︎ </span>
-        {% else %}
-            <span style="color: gray;"> ♡ </span>
-        {% endif %}
-        </a>
-        <a href="{% url 'detail' post.pk %}">({{post.likes.count}} like{{post.likes.count|pluralize}} / {{post.comment_set.all.count}} comment{{post.comment_set.all.count|pluralize}} )</a>
+        
+        
         - <a href="{% url 'profile' post.user.pk %}">{{post.user}}</a> {{post.created_date}}
         </div> <hr>
     {% endfor %}

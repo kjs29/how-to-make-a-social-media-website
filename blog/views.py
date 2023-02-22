@@ -26,14 +26,14 @@ def login_view(request):
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
-        
+
         # when signup button is clicked
         if 'signupuser' in request.POST:
             if request.POST['username']:
                 user = User.objects.create_user(username=request.POST.get('username'), password=request.POST.get('password'))
                 user.save()
                 user = authenticate(request, username=username, password=password)
-                
+
                 # when an user's credentials are authenticated
                 if user is not None:
                     login(request, user)
@@ -47,12 +47,12 @@ def login_view(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-    
+
                 return redirect(request.META.get("HTTP_REFERER", "home"), )
-            messages.error(request, "Invalid Username or(and) Password") 
+            messages.error(request, "Invalid Username or(and) Password")
 
         return redirect(request.META.get("HTTP_REFERER", "home"), )
-    
+
     # when request.method == "GET"
     # log in view is in the Navbar, therefore most likely it needs to READ users and posts
     users = User.objects.all()
@@ -62,7 +62,7 @@ def login_view(request):
 
 def logout_view(request):
     """Log out view"""
-    
+
     logout(request)
 
     return redirect('home')
@@ -72,7 +72,7 @@ def detail_view(request,pk):
 
     post = Post.objects.get(pk=pk)
     comments = post.comment_set.all().order_by('-created_date')
-    
+
     return render(request, 'detail.html', {'post':post, 'comments':comments})
 
 def create_view(request):
@@ -125,9 +125,9 @@ def edit_view(request,pk):
                 post.original_filename = file.name
             post.title = title
             post.body = body
-            
+
             post.save()
-            
+
             return redirect('detail', pk=pk)
 
         original_filename = post.original_filename
@@ -139,7 +139,7 @@ def like_post_view(request, pk):
     """Like post view"""
 
     post = get_object_or_404(Post, pk=pk)
-    
+
     # all people who like this post = post.likes.all()
     if post.likes.filter(pk=request.user.pk).exists():
 
@@ -148,16 +148,16 @@ def like_post_view(request, pk):
         print(f"hello? :{request.user.pk}")
         post.likes.remove(request.user.pk)
         like_status = True
-        
+
     else:
         print(f"hello? :{request.user.pk}")
         post.likes.add(request.user.pk)
         like_status = False
     post.save()
     context = {'like_status':like_status}
-    
+
     return redirect(request.META.get("HTTP_REFERER", "home"), context)
-        
+
 def profile_view(request, pk):
     """User profile view"""
 
@@ -171,7 +171,7 @@ def authenticate_view(request, pk):
 
     if request.method == "POST":
         password = request.POST.get('password', None)
-        
+
         if password is None:
             messages.error(request, 'Password is required.')
 
@@ -182,9 +182,9 @@ def authenticate_view(request, pk):
             messages.error(request, 'Incorrect password.')
 
             return redirect('authenticate', pk=pk)
-        
+
         return redirect('profile_edit', pk=user.pk)
-        
+
     return render(request, 'authenticate.html', {'pk': pk})
 
 def profile_edit_view(request, pk):
@@ -199,11 +199,11 @@ def profile_edit_view(request, pk):
 
         # validating user's name, not saving now
         if 'validate-username' in request.POST:
-            
+
             if username not in user_list and username.isalnum():
-                user.username = username    
+                user.username = username
                 messages.success(request, f"Username {username} is valid")
-            
+
             # when user input contains special characters
             elif not username.isalnum():
                 special_characters = set()
@@ -215,20 +215,20 @@ def profile_edit_view(request, pk):
 
             else:
                 messages.error(request,f"Username {username} is NOT valid")
-                
+
                 return redirect('profile_edit',pk=user.pk)
 
         # when save button is clicked
         if 'save' in request.POST:
-            
+
             # when username is valid
             if username not in user_list and username.isalnum():
-                
+
                 # password is empty
                 if not password:
                     user.username = username
                     user.save()
-                
+
                 # password is not empty
                 else:
                     user.username = username
@@ -238,7 +238,7 @@ def profile_edit_view(request, pk):
                 login(request, user)
 
                 return redirect('profile', pk=user.pk)
-            
+
             # when username is NOT valid
             messages.error(request,f"Username {username} is NOT valid")
             return redirect('profile_edit', pk=user.pk)
@@ -256,7 +256,7 @@ def comment_view(request, pk):
             new_comment.save()
 
         return redirect('detail',pk=pk)
-    
+
     return render(request, "detail.html",{"pk":pk})
 
 def delete_comment_view(request, pk_post, pk_comment):
@@ -265,7 +265,7 @@ def delete_comment_view(request, pk_post, pk_comment):
     comment = Comment.objects.get(pk=pk_comment)
     if request.user.pk == comment.user.pk and request.user.is_authenticated:
         comment.delete()
-        
+
     return redirect('detail', pk=pk_post)
 
 def delete_user_view(request, pk):
@@ -280,12 +280,12 @@ def delete_user_view(request, pk):
         directory = os.path.join(settings.MEDIA_ROOT, 'images')
         if user.username in directory:
             shutil.rmtree(os.path.join(directory, user.username))
-    
+
     return redirect('home', )
 
 def delete_post_view(request, pk):
     """Delete post view"""
-    
+
     post = Post.objects.get(pk=pk)
     if request.user == post.user and request.user.is_authenticated:
         post.photo.delete()

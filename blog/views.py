@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.contrib import messages
 from django.conf import settings
+from django.core.mail import EmailMessage, send_mail
 import os, shutil
 
 
@@ -19,6 +20,57 @@ def home(request):
             like_status = True
 
     return render(request, 'home.html', {'users':users, 'posts':posts,'like_status':like_status})
+
+def about_view(request):
+    return render(request, 'about.html', {})
+
+def contact_view(request):
+    if request.method == "POST":
+        subject = request.POST['subject']
+        body = request.POST['body']
+        sender_email = request.POST['email'].lower()
+        
+        email_to_myself = EmailMessage(
+            f"[Django website requests : {subject}]",
+            f"""
+            Subject : {subject}<br><br>
+            
+            Body : {body}<br><br>
+            
+            Requested Email : {sender_email}
+            """,
+            to=['jsk.jinsung@gmail.com'],
+            reply_to=[sender_email]
+        )
+
+        email_to_customer = EmailMessage(
+            "Thank you for your request",
+            f"""
+            We have received your message,<br><br>
+            
+            Your message : <br><strong>{body}</strong><br><br><br>
+
+            If this message is what you wrote, please type 'Confirmed' in the reply.<br><br>
+            
+            We will get in touch with you as soon as we can.<br><br>
+
+            Thank you.<br><br>
+            
+            Let's change the world!
+            """,
+            '"Make Your Bed" <settings.EMAIL_HOST_USER>',
+            to=[sender_email],
+            
+        )
+        email_to_myself.content_subtype = 'html'
+        email_to_customer.content_subtype = 'html'
+        email_to_myself.send()
+        email_to_customer.send()
+
+        return redirect('thankyou')
+    return render(request, 'contact.html',{})
+def thankyou(request):
+    return render(request,'thankyou.html',)
 
 def login_view(request):
     """Log in view"""
@@ -306,3 +358,4 @@ def delete_photo_view(request, pk):
     post.photo.delete()
 
     return redirect('edit', pk=pk)
+

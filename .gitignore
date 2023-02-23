@@ -1,5 +1,6 @@
-# secret key
+# secret keys
 mysite/secret_key.txt
+mysite/email_host_password.txt
 
 # Python
 *.pyc

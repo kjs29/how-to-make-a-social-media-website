@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Thank you</title>
+{% endblock %}
+
+{% block content %}
+{% include 'navbar.html' %}
+<h1>Thank you!</h1>
+
+<p>Your message has been submitted. <br>Please check your email</p>
+
+<a href="{% url 'home' %}">Continue to homepage</a>
+{% endblock %}

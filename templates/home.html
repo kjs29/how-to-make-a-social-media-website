@@ -14,9 +14,6 @@
     <p>Dreamers : {% for each in users %} <a href="{% url 'profile' each.pk %}">{{each.username}}</a> / {% endfor %} </p><hr>
     
     <h2>Total Posts : {{ posts.count }}</h2>
-    
-    <hr>
-    
 
     {% for post in posts %}
         <div>

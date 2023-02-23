@@ -16,7 +16,7 @@ def home(request):
     posts = Post.objects.all().order_by('-created_date')
     like_status = False
     for post in posts:
-        if post.likes.filter(pk=request.user.pk).exists():
+        if post.liked_users.filter(pk=request.user.pk).exists():
             like_status = True
 
     return render(request, 'home.html', {'users':users, 'posts':posts,'like_status':like_status})
@@ -198,18 +198,18 @@ def like_post_view(request, pk):
 
     post = get_object_or_404(Post, pk=pk)
     
-    # all people who like this post = post.likes.all()
-    if post.likes.filter(pk=request.user.pk).exists():
+    # all people who like this post = post.liked_users.all()
+    if post.liked_users.filter(pk=request.user.pk).exists():
 
-        # post.likes.remove(request.user) raises LazyObjectError when user is NOT authenticated
+        # post.liked_users.remove(request.user) raises LazyObjectError when user is NOT authenticated
         # user's pk is allowed to pass in here, and it doesn't raise error since AnonymousUser's pk is None
         print(f"hello? :{request.user.pk}")
-        post.likes.remove(request.user.pk)
+        post.liked_users.remove(request.user.pk)
         like_status = True
         
     else:
         print(f"hello? :{request.user.pk}")
-        post.likes.add(request.user.pk)
+        post.liked_users.add(request.user.pk)
         like_status = False
     post.save()
     context = {'like_status':like_status}

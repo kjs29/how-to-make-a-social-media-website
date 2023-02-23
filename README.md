@@ -20,7 +20,7 @@
 
 ## Key techniques implemented
 
-- User authentication
+### User authentication
  
     - Used built-in `User` model
         
@@ -36,7 +36,7 @@
 
         - `django.contrib.auth.logout`
 
-- User authorization
+### User authorization
 
     ```py
     if request.user.is_authenticated:
@@ -54,7 +54,7 @@
 
         - Unauthorized users can't delete comments
 
-- Established different relationships between different models
+### Established different relationships between different models
 
     - An User creating Posts(User <-> Post.user)
 
@@ -81,7 +81,7 @@
 
         - One-to-many relationship between `django.contrib.auth.models.User` and `blog.models.Comment.user`
 
-- Storing static files
+### Storing static files
 
     - By default Django does not track the `media` directory because it is intended for user-uploaded files and it is typically not a good idea to upload user-uploaded files on Github
     
@@ -128,7 +128,7 @@
                 os.mkdir(each_user_folder_path)
             ```
 
-- Send emails
+### Send emails
 
     - Set email host as Gmail's SMTP server
 
@@ -165,7 +165,7 @@
         EMAIL_USE_TLS = True
         ```
 
-- CRUD
+### CRUD
 
     - Create
         

@@ -86,6 +86,8 @@
 
 - ~~Users deleting their own accounts~~
 
-- Deploying a website
+- ~~Deploying a website~~
+
+- ~~Sending emails~~
 
 - Allowing users to download files

@@ -22,23 +22,37 @@
 
 - User authentication
  
-    - Login / Log out
-    
-        - Used built-in `User` model
+    - Used built-in `User` model
         
-            ```py
-            from django.contrib.auth.models import User
-            ```
+        ```py
+        from django.contrib.auth.models import User
+        ```
+    
+    - Authenticate / Login / Log out
+    
+        - `django.contrib.auth.authenticate`
+
+        - `django.contrib.auth.login`
+
+        - `django.contrib.auth.logout`
 
 - User authorization
 
-    - Unregistered users can't create a post
+    ```py
+    if request.user.is_authenticated:
+        # perform tasks when user is authenticated
+    return render(request, 'home.html', {})
+    ```
 
-    - Unregistered users can't like post
+    - Examples
 
-    - Unauthorized users can't edit their posts
+        - Unregistered users can't create a post
 
-    - Unauthorized users can't delete comments
+        - Unregistered users can't like post
+
+        - Unauthorized users can't edit their posts
+
+        - Unauthorized users can't delete comments
 
 - Established different relationships between different models
 

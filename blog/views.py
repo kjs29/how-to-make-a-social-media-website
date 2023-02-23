@@ -69,6 +69,7 @@ def contact_view(request):
 
         return redirect('thankyou')
     return render(request, 'contact.html',{})
+
 def thankyou(request):
     return render(request,'thankyou.html',)
 

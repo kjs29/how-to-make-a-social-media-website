@@ -8,16 +8,16 @@
     <h1>
         Title : {{post.title}} <br>
         <a href="{% url 'like_post' post.pk  %}">
-        {% if user in post.likes.all %}
+        {% if user in post.liked_users.all %}
             <span style="color: red;"> ♥︎ </span>
         {% else %}
             <span style="color: gray;"> ♡ </span>
         {% endif %}
         </a>
-        - {{post.likes.count}} like{{post.likes.count|pluralize}} - 
+        - {{post.liked_users.count}} like{{post.liked_users.count|pluralize}} - 
 
     
-        ({% for each_user in post.likes.all %}
+        ({% for each_user in post.liked_users.all %}
             <a href="{% url 'profile' each_user.pk %}">{{each_user.username}}</a> /
         {% endfor %})
     </h1>

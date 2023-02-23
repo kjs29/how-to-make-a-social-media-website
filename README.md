@@ -20,17 +20,31 @@
 
 ## Key techniques implemented
 
-- User authentication
+### User authentication
  
-    - Login / Log out
+- Used built-in `User` model
     
-        - Used built-in `User` model
-        
-        ```py
-        from django.contrib.auth.models import User
-        ```
+    ```py
+    from django.contrib.auth.models import User
+    ```
 
-- User authorization
+- Authenticate / Login / Log out
+
+    - `django.contrib.auth.authenticate`
+
+    - `django.contrib.auth.login`
+
+    - `django.contrib.auth.logout`
+
+### User authorization
+
+```py
+if request.user.is_authenticated:
+    # perform tasks when user is authenticated
+return render(request, 'home.html', {})
+```
+
+- Examples
 
     - Unregistered users can't create a post
 
@@ -40,33 +54,138 @@
 
     - Unauthorized users can't delete comments
 
-- User liking post
+### Established different relationships between different models
 
-    - Many-to-many relationships between `django.contrib.auth.models.User` and `django.db.models.Post.likes`
-        
-        User can like any post and any post can be liked by many users. 
+- An User creating Posts(User <-> Post.user)
 
-- CRUD
+    - An User can write as many Posts as he(she) wants and each Post is written by only one User
 
-    - Create
-        
-        - Posting, Commenting
+    - One-to-many relationship between `django.contrib.auth.models.User` and `blog.models.Post.user`
 
-    - Read
 
-        - Retrieving objects from database
+- Users liking Posts (User <-> Post.liked_users)
 
-    - Update
+    - An User can give 'like' to as many Posts as he(she) want and each Post can receive 'like' by as many Users as it wants.
 
-        - Editing post, personal info
+    - Many-to-many relationship between `django.contrib.auth.models.User` and `django.db.models.Post.liked_users`
+
+- A Post having Comments (Post <-> Comment.post)
+
+    - A Post can have as many Comments and each Comment can be on only one Post
+
+    - One-to-many relationship between `blog.models.Post` and `blog.models.Comment.post`
+
+- An User writing Comments (User <-> Comment.user)
+
+    - An User can write as many Comments as he(she) wants and each Comment is written by only one User
+
+    - One-to-many relationship between `django.contrib.auth.models.User` and `blog.models.Comment.user`
+
+### Storing static files
+
+- By default Django does not track the `media` directory because it is intended for user-uploaded files and it is typically not a good idea to upload user-uploaded files on Github
+
+- However, when deploying on Pythonanywhere.com, I had to create a new media directory on their file structure, so I decided to keep only `media` and ignore all subdirectories under `media`
+
+
+    ```
+    $ touch media/.gitkeep
+    ```
+
+    This command allows to keep track of `media` directory
+
+    In <em>.gitignore</em>
     
-    - Delete
+    ```
+    /media/images/
+    ```
 
-        - Deleting post's photo
+    This code allows to ignore `media/images` and files in there
 
-        - Deleting comment
+- Stored user-uploaded files dynamically
 
-        - Deleting user
+    - Set `media/images/<username>/` as the directory for storing user-uploaded files
+
+        - If username `kjs3980` uploaded his photo named `filename_1.png`, it is stored in `media/images/kjs3980/filename_1.png`
+
+        - If username `randomuser1` uploaded her photo named `randomfile_2.png`, it is stored in `media/images/randomuser1/randomfile_2.png`
+
+    - views.py
+
+        ```py
+        # set file path for images in general, and each user's images
+        image_folder = os.path.join(os.path.join(settings.MEDIA_ROOT,'images'))
+        each_user_folder_path=os.path.join(settings.MEDIA_ROOT, 'images', user.username)
+
+        # if user specific directory doesn't exist
+        if not os.path.exists(each_user_folder_path):
+
+            # if image folder doesn't exist
+            if not os.path.exists(image_folder):
+                os.mkdir(image_folder)
+
+            # dynamically create a directory for each user's images 
+            os.mkdir(each_user_folder_path)
+        ```
+
+### Send emails
+
+- Set email host as Gmail's SMTP server
+
+    - Two way verification is required.
+
+        Google Account -> Security -> 2-Step Verification (Activate) -> Set App Passwords (App Passwords must be confidential)
+    
+    - Gmail's SMTP server uses port `587`
+
+- Similar to secret_key, email password key is made sure it is private, not public on Github.
+
+    ```py
+    with open(os.path.join(BASE_DIR, 'mysite', 'email_host_password.txt')) as e:
+        EMAIL_HOST_PASSWORD = e.read().strip()
+    ```
+
+    <em>email_host_password.txt (Example)</em>
+
+    ```
+    abcdefghijklmnop
+    ```
+
+    No quotation marks around the password
+
+- Used default Django backend for sending emails
+
+    ```py
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    ``` 
+
+- Enabled encrypted message in the email (Transport Layer Security)
+
+    ```py
+    EMAIL_USE_TLS = True
+    ```
+
+### CRUD
+
+- Create
+    
+    - Posting, Commenting
+
+- Read
+
+    - Retrieving objects from database (Queryset)
+
+- Update
+
+    - Editing post, personal info
+
+- Delete
+
+    - Deleting post's photo
+
+    - Deleting comment
+
+    - Deleting user
 
 ## More updates to add
 
@@ -86,6 +205,10 @@
 
 - ~~Users deleting their own accounts~~
 
-- Deploying a website
+- ~~Deploying a website~~
+
+- ~~Sending emails~~
 
 - Allowing users to download files
+
+- Unit tests to ensure code quality and functionality

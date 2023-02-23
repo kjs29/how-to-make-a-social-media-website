@@ -19,9 +19,9 @@
         <div>
         
         <h2>
-            <a href="{% url 'detail' post.pk %}"><strong>Title : {{post.title}}</strong></a><a href="{% url 'detail' post.pk %}"> ({{post.likes.count}} like{{post.likes.count|pluralize}} / {{post.comment_set.all.count}} comment{{post.comment_set.all.count|pluralize}} )</a>
+            <a href="{% url 'detail' post.pk %}"><strong>Title : {{post.title}}</strong></a><a href="{% url 'detail' post.pk %}"> ({{post.liked_users.count}} like{{post.liked_users.count|pluralize}} / {{post.comment_set.all.count}} comment{{post.comment_set.all.count|pluralize}} )</a>
             <a href="{% url 'like_post' post.pk  %}">
-                {% if user in post.likes.all %}
+                {% if user in post.liked_users.all %}
                     <span style="color: red;"> ♥︎ </span>
                 {% else %}
                     <span style="color: gray;"> ♡ </span>

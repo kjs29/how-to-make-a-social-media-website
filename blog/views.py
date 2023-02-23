@@ -16,7 +16,7 @@ def home(request):
     posts = Post.objects.all().order_by('-created_date')
     like_status = False
     for post in posts:
-        if post.likes.filter(pk=request.user.pk).exists():
+        if post.liked_users.filter(pk=request.user.pk).exists():
             like_status = True
 
     return render(request, 'home.html', {'users':users, 'posts':posts,'like_status':like_status})
@@ -29,14 +29,14 @@ def contact_view(request):
         subject = request.POST['subject']
         body = request.POST['body']
         sender_email = request.POST['email'].lower()
-        
+
         email_to_myself = EmailMessage(
             f"[Django website requests : {subject}]",
             f"""
             Subject : {subject}<br><br>
-            
+
             Body : {body}<br><br>
-            
+
             Requested Email : {sender_email}
             """,
             to=['jsk.jinsung@gmail.com'],
@@ -47,20 +47,20 @@ def contact_view(request):
             "Thank you for your request",
             f"""
             We have received your message,<br><br>
-            
+
             Your message : <br><strong>{body}</strong><br><br><br>
 
             If this message is what you wrote, please type 'Confirmed' in the reply.<br><br>
-            
+
             We will get in touch with you as soon as we can.<br><br>
 
             Thank you.<br><br>
-            
+
             Let's change the world!
             """,
             '"Make Your Bed" <settings.EMAIL_HOST_USER>',
             to=[sender_email],
-            
+
         )
         email_to_myself.content_subtype = 'html'
         email_to_customer.content_subtype = 'html'
@@ -69,6 +69,7 @@ def contact_view(request):
 
         return redirect('thankyou')
     return render(request, 'contact.html',{})
+
 def thankyou(request):
     return render(request,'thankyou.html',)
 
@@ -198,18 +199,18 @@ def like_post_view(request, pk):
 
     post = get_object_or_404(Post, pk=pk)
 
-    # all people who like this post = post.likes.all()
-    if post.likes.filter(pk=request.user.pk).exists():
+    # all people who like this post = post.liked_users.all()
+    if post.liked_users.filter(pk=request.user.pk).exists():
 
-        # post.likes.remove(request.user) raises LazyObjectError when user is NOT authenticated
+        # post.liked_users.remove(request.user) raises LazyObjectError when user is NOT authenticated
         # user's pk is allowed to pass in here, and it doesn't raise error since AnonymousUser's pk is None
-        print(f"hello? :{request.user.pk}")
-        post.likes.remove(request.user.pk)
+        # print(f"hello? :{request.user.pk}")
+        post.liked_users.remove(request.user.pk)
         like_status = True
 
     else:
         print(f"hello? :{request.user.pk}")
-        post.likes.add(request.user.pk)
+        post.liked_users.add(request.user.pk)
         like_status = False
     post.save()
     context = {'like_status':like_status}

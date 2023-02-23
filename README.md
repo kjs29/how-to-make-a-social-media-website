@@ -46,6 +46,8 @@
         
         User can like any post and any post can be liked by many users. 
 
+- Send emails
+
 - CRUD
 
     - Create

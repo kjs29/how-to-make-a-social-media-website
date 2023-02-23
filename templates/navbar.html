@@ -1,5 +1,10 @@
 <h1><a href="{% url 'home' %}">Make Your Bed In The Morning</a></h1>
 
+    <ul>
+        <li><a href="{% url 'about' %}">About</a></li>
+        <li><a href="{% url 'contact' %}">Contact</a></li>
+    </ul>
+
     <!-- User sign up & Login -->
     {% if request.user.is_authenticated %}
         <h2>Welcome, {{request.user.username}}!

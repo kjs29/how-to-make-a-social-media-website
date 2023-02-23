@@ -26,9 +26,9 @@
     
         - Used built-in `User` model
         
-        ```py
-        from django.contrib.auth.models import User
-        ```
+            ```py
+            from django.contrib.auth.models import User
+            ```
 
 - User authorization
 
@@ -44,9 +44,44 @@
 
     - Many-to-many relationships between `django.contrib.auth.models.User` and `django.db.models.Post.likes`
         
-        User can like any post and any post can be liked by many users. 
+        User can like any post and any post can receive 'like' by any user.
 
 - Send emails
+
+    - Set email host as Gmail's SMTP server
+
+        - Two way verification is required.
+
+            Google Account -> Security -> 2-Step Verification (Activate) -> Set App Passwords (App Passwords must be confidential)
+        
+        - Gmail's SMTP server uses port `587`
+
+    - Similar to secret_key, email password key is made sure it is private, not public on Github.
+
+        ```py
+        with open(os.path.join(BASE_DIR, 'mysite', 'email_host_password.txt')) as e:
+            EMAIL_HOST_PASSWORD = e.read().strip()
+        ```
+
+        <em>email_host_password.txt (Example)</em>
+
+        ```
+        abcdefghijklmnop
+        ```
+
+        No quotation marks around the password
+    
+    - Used default Django backend for sending emails
+
+        ```py
+        EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+        ``` 
+    
+    - Enabled encrypted message in the email (Transport Layer Security)
+
+        ```py
+        EMAIL_USE_TLS = True
+        ```
 
 - CRUD
 
@@ -56,7 +91,7 @@
 
     - Read
 
-        - Retrieving objects from database
+        - Retrieving objects from database (Queryset)
 
     - Update
 

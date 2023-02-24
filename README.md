@@ -1,6 +1,6 @@
 # A social media website using Django Web Framework
 
-[Website link](http://kjs3980.pythonanywhere.com)
+[Website link](http://kjs3980.pythonanywhere.com){:target="_blank"}
 
 ## Objective
 

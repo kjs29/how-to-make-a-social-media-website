@@ -204,7 +204,7 @@ def like_post_view(request, pk):
 
         # post.liked_users.remove(request.user) raises LazyObjectError when user is NOT authenticated
         # user's pk is allowed to pass in here, and it doesn't raise error since AnonymousUser's pk is None
-        print(f"hello? :{request.user.pk}")
+        # print(f"hello? :{request.user.pk}")
         post.liked_users.remove(request.user.pk)
         like_status = True
         

@@ -1,8 +1,6 @@
 # A social media website using Django Web Framework
 
-[Website link](http://kjs3980.pythonanywhere.com)
-
-<img width="360" alt="Screenshot 2023-02-12 at 12 08 37 AM" src="https://user-images.githubusercontent.com/96529477/218298257-be205c61-851c-4b4c-8fbc-33637aff7d67.png">
+<a href="http://kjs3980.pythonanywhere.com" target="_blank">Website link</a>
 
 ## Objective
 

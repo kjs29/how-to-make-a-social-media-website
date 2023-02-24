@@ -27,9 +27,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 # with open(os.path.join(BASE_DIR, 'mysite', '.env')) as f:
 #     SECRET_KEY = f.read().strip()
+<<<<<<< HEAD
+=======
 
-# Another way to retrieve SECRET_KEY - in case there is another environment variable
-SECRET_KEY = str(os.getenv('SECRET_KEY'))
+# Another way to securely store secret key
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -142,8 +144,11 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'jsk.jinsung@gmail.com'
 # with open(os.path.join(BASE_DIR, 'mysite', 'email_host_password.txt')) as e:
 #     EMAIL_HOST_PASSWORD = e.read().strip()
+<<<<<<< HEAD
 EMAIL_HOST_PASSWORD = str(os.getenv('EMAIL_HOST_PASSWORD'))
+=======
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+>>>>>>> 87a6f3d657910298b4197b0762c5dc0897d3c7f3
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-

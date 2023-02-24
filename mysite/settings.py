@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+import dotenv
+
+dotenv.load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,9 +25,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-with open(os.path.join(BASE_DIR, 'mysite', 'secret_key.txt')) as f:
-    SECRET_KEY = f.read().strip()
+# with open(os.path.join(BASE_DIR, 'mysite', '.env')) as f:
+#     SECRET_KEY = f.read().strip()
 
+# Another way to retrieve SECRET_KEY - in case there is another environment variable
+SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -135,8 +140,9 @@ MEDIA_URL = ''
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'jsk.jinsung@gmail.com'
-with open(os.path.join(BASE_DIR, 'mysite', 'email_host_password.txt')) as e:
-    EMAIL_HOST_PASSWORD = e.read().strip()
+# with open(os.path.join(BASE_DIR, 'mysite', 'email_host_password.txt')) as e:
+#     EMAIL_HOST_PASSWORD = e.read().strip()
+EMAIL_HOST_PASSWORD = str(os.getenv('EMAIL_HOST_PASSWORD'))
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

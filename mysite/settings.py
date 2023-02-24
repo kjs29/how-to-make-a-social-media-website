@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-with open(os.path.join(BASE_DIR, 'mysite', '.secret_key.txt')) as f:
+with open(os.path.join(BASE_DIR, 'mysite', 'secret_key.txt')) as f:
     SECRET_KEY = f.read().strip()
 
 # Another way to securely store secret key
@@ -140,7 +140,7 @@ MEDIA_URL = ''
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'jsk.jinsung@gmail.com'
-with open(os.path.join(BASE_DIR, 'mysite', '.email_host_password.txt')) as e:
+with open(os.path.join(BASE_DIR, 'mysite', 'email_host_password.txt')) as e:
     EMAIL_HOST_PASSWORD = e.read().strip()
 # EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = 587

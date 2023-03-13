@@ -13,23 +13,28 @@
 
     <div class="grid-item-4"></div>
 
-    <div class="grid-item-5">
+    <div class="grid-item-5 rows">
+        {% if request.user.post.pk != post.pk %}
+        <h2 class="important">Edit post</h2>
+        {% else %}
+        <h2 class="important">Create post</h2>
+        {% endif %}
         <fieldset>
             <form class="rows" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
                 <label for="title">Title</label>
                 <input type="text" name="title" id="title" value="{{post.title}}">
                 <label for="body">Body</label>
-                <textarea type="text" name="body" id="body">{{post.body}}</textarea><br>
+                <textarea type="text" name="body" id="body" cols="30" rows="10">{{post.body}}</textarea>
                 
                 {% if post.photo %}
-                    <img src="{{post.photo.url}}" alt="" style="width: 200px;"><br>
+                    <img src="{{post.photo.url}}" alt="" style="width: 200px;">
                 {% endif %}
                 {% if post.original_filename %}
                     <p style="color: gray;">Original file : {{ original_filename }}</p>
                     <p><a href="{% url 'delete_photo' post.pk %}">Delete photo</a></p>
                 {% endif %}
                 <label for="file">Upload photo</label>
-                <input type="file" id="file" name="file" value="{{ original_filename }}"><br>
+                <input type="file" id="file" name="file" value="{{ original_filename }}">
                 <input type="submit" value="Save">
             </form>
         </fieldset>

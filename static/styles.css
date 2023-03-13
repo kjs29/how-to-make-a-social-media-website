@@ -7,7 +7,6 @@ body {
     font-family: 'Tilt Warp', cursive; */
     padding: 20px;
 }
-
 fieldset {
     margin: 5px;
     min-width: 300px;
@@ -23,13 +22,12 @@ fieldset {
     grid-template: repeat(4, 1fr) / repeat(4, 1fr);
     grid-gap: 30px;
 }
-
+.grid > div {
+    padding: 10px;
+}
 .grid > div:hover {
     background-color: #fafafa;
     
-}
-#mainpicture {
-    background-color:white;
 }
 ul li {
     list-style-type: none;
@@ -72,30 +70,16 @@ a.warning-button {
     display: flex;
     gap: 10px;
 }
-#main-quote {
-    font-family: 'Caveat', cursive;
-    font-size: 38px;
-}
-#makeyourbed {
-    font-size: 42px;
-}
-#noimage {
-    width:400px;
-    height:400px;
-    border: 1px dotted black;
-}
 .about-contact {
     padding: none;
 }
 .grid-item-1 {
     grid-column: 1 / 3;
-    padding: 5px;
     background-color: #fdfbfb;
 }
 .grid-item-2 {
     grid-column: 3;
     background-color: #fbfdfb;
-    padding: 10px;
 }
 .grid-item-3 {
     grid-column: 4;
@@ -103,7 +87,6 @@ a.warning-button {
     display: flex;
     flex-direction: column;
     max-height: 3fr;
-    padding: 10px;
     background-color: #e5e6eb;
 }
 .grid-item-3 img {
@@ -112,13 +95,11 @@ a.warning-button {
 .grid-item-4 {
     grid-column: 1;
     grid-row: 2 / 3;
-    padding: 10px;
     background-color: #f8fbff;
 }
 .grid-item-5 {
     grid-column: 2 / 4;
     grid-row: 2 / 4;
-    padding: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -132,7 +113,6 @@ a.warning-button {
     grid-column: 1;
     grid-row: 3 / 5; 
     background-color: #f8f8fa;
-    padding: 10px;
 }
 .grid-item-7 {
     grid-column: 2 / 5;
@@ -146,7 +126,21 @@ a.warning-button {
 .important {
     font-size: 32px;
 }
-
+#main-quote {
+    font-family: 'Caveat', cursive;
+    font-size: 38px;
+}
+#makeyourbed {
+    font-size: 42px;
+}
+#noimage {
+    width:400px;
+    height:400px;
+    border: 1px dotted black;
+}
+#mainpicture {
+    background-color:white;
+}
 #trademark::after {
     content: '© Make Your bed';
 }

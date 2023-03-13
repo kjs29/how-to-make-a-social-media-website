@@ -22,8 +22,7 @@ db.sqlite3
 migrations/
 
 # Static folder at project root
-/static/*
-!/static/styles.css
+/static/
 /media/images/
 
 # macOS

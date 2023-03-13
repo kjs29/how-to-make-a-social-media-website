@@ -8,19 +8,33 @@
 
 {% block content %}
     {% include 'navbar.html' %}
-    <h1>Contact</h1>
-    
-    <form action="" method="post">{% csrf_token %}
-        <label for="subject">Subject</label>
-        <input type="text" id="subject" name="subject" required><br>
 
-        <textarea name="body" id="body" cols="30" rows="10" required></textarea><br>
-
-        <label for="email">Your Email - We will get back to you</label><br>
-        <input type="email" id="email" name="email" required><br>
+    <!-- Quote -->
+    <div class="grid-item-2">
+        <h2 id="main-quote">"The journey of a thousand miles begins with one step."</h2>
+        <p>Lao Tzu</p>
+    </div>
+    <div class="grid-item-3"></div>
+    <div class="grid-item-4"></div>
+    <div class="grid-item-5 rows">
         
-        <input type="submit" id="send-message-btn" value="send message">
-    </form>
+        <h2 class="important">Contact</h2>
     
-    
+        <form action="" method="post">{% csrf_token %}
+            <fieldset>
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" name="subject" required><br>
+
+                <label for="body">Message</label>
+                <textarea name="body" id="body" cols="30" rows="10" required></textarea><br>
+
+                <label for="email">Your Email - We will get back to you</label><br>
+                <input type="email" id="email" name="email" required><br>
+                
+                <input type="submit" id="send-message-btn" value="send message">
+            </fieldset>
+            
+        </form>
+    </div>
+    <div class="grid-item-6"></div>
 {% endblock %}

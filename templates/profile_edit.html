@@ -4,27 +4,39 @@
 
 {% block content %}
     {% include "navbar.html" %}
-    <h1>Edit Profile</h1>
-    {% if request.user.is_authenticated %}
+
+    <!-- Quote -->
+    <div class="grid-item-2">
+        <h2 id="main-quote">"What you are looking for is not out there, it is in you."</h2>
+    </div>
+    <div class="grid-item-3"></div>
+    <div class="grid-item-4"></div>
+    <div class="grid-item-5 rows">
+        <h2>Edit Profile</h2>
+        {% if request.user.is_authenticated %}
         <form action="" method="post">{% csrf_token %}
-            <label for="username">Username</label>
-            <input type="text" name="username" id="username" value="{{username}}">
-            <input type="submit" name="validate-username" value="validate-username"><br>
-            {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email" value="{{request.user.email}}"><br>
-            
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" value="{{password}}">
-            <input type="submit" name="save" value="save">
+            <fieldset>
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" value="{{username}}">
+                <input type="submit" name="validate-username" value="validate-username"><br>
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" value="{{request.user.email}}"><br>
+                
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" value="{{password}}">
+                <input type="submit" name="save" value="save">
+            </fieldset>
         </form>
-        <hr>
-        <a href="{% url 'delete_user' request.user.pk %}" style="color: red;">Delete my account</a> (Warning : You can't undo this action.)
-    {% endif %}
+        <a class="warning-button" href="{% url 'delete_user' request.user.pk %}">Delete my account</a> (Warning : You can't undo this action.)
+        {% endif %}
+    </div>
+    <div class="grid-item-6"></div>
+    
 {% endblock %}

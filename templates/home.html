@@ -1,40 +1,73 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}<title>MakeYourBed</title>{% endblock %}
 
 {% block content %}
+    
     {% include 'navbar.html' %}
 
-    <h1>"If you want to change the world, start off by making your bed" <br> </h1>- Admiral William H. McRaven <hr>
-
-    <h2><a href="{% url 'create' %}"><strong>Change the world</strong></a>- Make your bed and share it on here together! (Log in required)</h2>
-
-    <div>Total {{ users.count }} users have signed up so far!</div>
-
-    <p>Dreamers : {% for each in users %} <a href="{% url 'profile' each.pk %}">{{each.username}}</a> / {% endfor %} </p><hr>
+    <!-- Quote -->
+    <div class="grid-item-2">
+        <h2 id="main-quote">"If you want to change the world, start off by making your bed"</h2>
+        <p>Admiral William H. McRaven</p>
+    </div>
     
-    <h2>Total Posts : {{ posts.count }}</h2>
 
-    {% for post in posts %}
+    <div class="grid-item-3">
         <div>
+            <h2><a href="{% url 'create' %}"><strong>Change the world</strong></a></h2>
+            <p>Make your bed and share it on here together!<br>(Log in required)</p>
+            <div class="line"></div>
+        </div>
         
-        <h2>
-            <a href="{% url 'detail' post.pk %}"><strong>Title : {{post.title}}</strong></a><a href="{% url 'detail' post.pk %}"> ({{post.liked_users.count}} like{{post.liked_users.count|pluralize}} / {{post.comment_set.all.count}} comment{{post.comment_set.all.count|pluralize}} )</a>
+        <div>
+            {% for post in posts %}
+            {% if post.photo %}
+                <a href="{% url 'detail' post.pk %}"><img src="{{post.photo.url}}" alt="" style="width: 200px;"></a><br>
+            {% endif %}
+            <a href="{% url 'detail' post.pk %}">Title : {{post.title}}</a><a href="{% url 'detail' post.pk %}"> ({{post.liked_users.count}} like{{post.liked_users.count|pluralize}} / {{post.comment_set.all.count}} comment{{post.comment_set.all.count|pluralize}} )</a>
             <a href="{% url 'like_post' post.pk  %}">
-                {% if user in post.liked_users.all %}
-                    <span style="color: red;"> ♥︎ </span>
-                {% else %}
-                    <span style="color: gray;"> ♡ </span>
-                {% endif %}
+            {% if user in post.liked_users.all %}
+                <span style="color: red;"> ♥︎ </span>
+            {% else %}
+                <span style="color: gray;"> ♡ </span>
+            {% endif %}
             </a>
-        </h2>
-        {% if post.photo %}
-            <a href="{% url 'detail' post.pk %}"><img src="{{post.photo.url}}" alt="" style="width: 200px;"></a><br>
-        {% endif %}
-        
-        
-        
-        - <a href="{% url 'profile' post.user.pk %}">{{post.user}}</a> {{post.created_date}}
-        </div> <hr>
-    {% endfor %}
+            <p>
+                by <a href="{% url 'profile' post.user.pk %}">{{post.user}}</a> {{post.created_date}}
+            </p>
+            
+            <div class="line"></div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="grid-item-4">
+        <div>Total {{ users.count }} users have signed up so far!</div>
+
+        <p>Dreamers : {% for each in users %} <a href="{% url 'profile' each.pk %}">{{each.username}}</a> / {% endfor %} </p>
+        <p>Total Posts : {{ posts.count }}</p>
+    </div>
+    
+
+    <!-- picture of the tidy bed -->
+    <div class="grid-item-5" id="mainpicture">
+        <img src="{% static 'main.jpg' %}" alt="Make your bed, make your day">
+    </div>
+
+    
+
+    <div class="grid-item-6"></div>
+    
+
+    <div class="grid-item-7">
+        <p>© Make Your bed</p>
+        <a href="{% url 'about' %}">About</a>
+        <a href="{% url 'contact' %}">Contact</a>
+        <a href="mailto:jsk.jinsung@gmail.com">Email Us</a>
+    </div>
+
+
+    
 {% endblock %}

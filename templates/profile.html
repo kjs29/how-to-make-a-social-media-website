@@ -4,49 +4,26 @@
 
 {% block content %}
     {% include 'navbar.html' %}
-    <h1>
+    
+    <!-- Quote -->
+    <div class="grid-item-2">
+        <h2 id="main-quote">"What you are looking for is not out there, it is in you."</h2>
+    </div>
+
+    <div class="grid-item-3">
+        <h2>Post{{posts|pluralize}} '{{user.username}}' has written</h2>
         {% if request.user.pk == user.pk %}
-            My profile Page 
-            <a href="{% url 'authenticate' request.user.pk %}">Edit</a>
-        {% else %}
-            {{user.username}}'s profile Page 
-        {% endif %}       
-    </h1>
-    Username : {{user.username}} <br>
-    Email : {{user.email}} <br>
-    
-    {% if request.user.pk == user.pk %}
-    Password : <a href="{% url 'authenticate' request.user.pk %}">Change Password</a> <br>
-    <hr>
-    {% endif %}
-
-    <!-- <h1>
-        <form action="" method="post">{% csrf_token %}
-            <label for="follow">Follow status</label>
-            <select name="follow_status" id="follow">
-                <option value="neutral">Neutral</option>
-                <option value="follow">Follow</option>
-                <option value="unfollow">Unfollow</option>
-                <option value="blocked">Block</option>
-            </select>
-
-            <input type="submit" value="save"> <hr>
-        </form>
-    </h1> -->
-    
-    <h2>Post{{posts|pluralize}} '{{user.username}}' has written</h2>
-    
-    {% if request.user.pk == user.pk %}
         <ul>
             <li>
                 {% for post in posts %}
                     <h3><a href="{% url 'detail' post.pk %}">{{post.title}}</a></h3><br>
                     <p>{{post.body}}</p>
-                    {{post.created_date}} <hr>
+                    {{post.created_date}}
+                    <div class="line"></div>
                 {% endfor %}
             </li>
         </ul>
-    {% else %}
+        {% else %}
         <ul>
             <li>
                 {{user.username}}'s some sample post{{posts|slice:":5"|pluralize}}...
@@ -55,5 +32,32 @@
                 {% endfor %}
             </li>
         </ul>
-    {% endif %}
+        {% endif %}
+    </div>
+
+    <div class="grid-item-4"></div>
+
+    <div class="grid-item-5 rows">
+        <h2 class="important">My profile Page</h2>
+        <p>
+            {% if request.user.pk == user.pk %}
+                <a href="{% url 'authenticate' request.user.pk %}">Edit</a>
+            {% else %}
+                {{user.username}}'s profile Page 
+            {% endif %}       
+        </p>
+        <p>
+            Username : {{user.username}}<br>
+            Email : {{user.email}} <br>
+            {% if request.user.pk == user.pk %}
+            Password : <a href="{% url 'authenticate' request.user.pk %}">Change Password</a><br>
+            {% endif %}
+        </p>
+        
+    </div>
+
+    <div class="grid-item-6"></div>
+    
+    
+    
 {% endblock %}

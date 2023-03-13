@@ -1,30 +1,45 @@
-<h1><a href="{% url 'home' %}">Make Your Bed In The Morning</a></h1>
-
-    <ul>
-        <li><a href="{% url 'about' %}">About</a></li>
-        <li><a href="{% url 'contact' %}">Contact</a></li>
-    </ul>
-
+<div class="grid-item-1 rows">
+    
+    <div class="about-contact">
+        <a href="{% url 'home' %}"><h1 id="makeyourbed">Make Your Bed In The Morning</h1></a>
+        <ul class="cols">
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+    </div>
+    
+    
+    
     <!-- User sign up & Login -->
     {% if request.user.is_authenticated %}
-        <h2>Welcome, {{request.user.username}}!
-        <a href="{% url 'profile' request.user.pk %}">My Profile</a> / 
-        <a href="{% url 'create' %}">Create a post</a> / 
-        <a href="{% url 'logout' %}">Logout</a></h2>
+    <div class="rows">
+        <h2>Welcome, {{request.user.username}}!</h2>
+        <div>
+            <a href="{% url 'profile' request.user.pk %}">My Profile</a>
+        </div>
+        <div>
+            <a href="{% url 'create' %}">Create a post</a>
+        </div> 
+        <div><a href="{% url 'logout' %}">Logout</a></div>
+    </div>
     {% else %}
-    <form action="{% url 'login' %}" method="post">{% csrf_token %}
-        <strong>Login</strong>/ <strong>sign up</strong>
-        <label for="username">username : </label>
-        <input type="text" name="username" id="username" value="" required>
-
-        <label for="password">password : </label>
-        <input type="password" name="password" id="password" value="" required>
-
-        <input type="submit" name="loginuser" value="login">
-        <input type="submit" name = "signupuser" value="signup">
-    </form>
-    {% for message in messages %}
-        {{message}}
-    {% endfor %}
+    <div class="rows">
+        <form class="rows" action="{% url 'login' %}" method="post">{% csrf_token %}
+            <legend>Log in / Sign up</legend>
+            <fieldset class="rows">
+                <label for="username">username : </label>
+                <input type="text" name="username" id="username" value="" required>
+    
+                <label for="password">password : </label>
+                <input type="password" name="password" id="password" value="" required>
+    
+                <input type="submit" name="loginuser" value="login">
+                <input type="submit" name = "signupuser" value="signup">
+            </fieldset>
+        </form>
+        {% for message in messages %}
+            {{message}}
+        {% endfor %}
+    </div>
     {% endif %}
-    <hr>
+</div>

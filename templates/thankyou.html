@@ -6,9 +6,13 @@
 
 {% block content %}
 {% include 'navbar.html' %}
-<h1>Thank you!</h1>
 
-<p>Your message has been submitted. <br>Please check your email</p>
+<div class="grid-item-2">
+    <h2>Thank you!</h2>
 
-<a href="{% url 'home' %}">Continue to homepage</a>
+    <p>Your message has been submitted. <br>Please check your email</p>
+
+    <a href="{% url 'home' %}">Continue to homepage</a>
+</div>
+
 {% endblock %}

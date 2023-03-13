@@ -5,8 +5,14 @@
 
 {% block content %}
     {% include 'navbar.html' %}
-    <h1>
-        Title : {{post.title}} <br>
+    <!-- Quote -->
+    <div class="grid-item-2">
+        <h2 id="main-quote">"Watch your thoughts, they become your words; watch your words, they become your actions; watch your actions, they become your habits; watch your habits, they become your character; watch your character, it becomes your destiny.”</h2>
+        <p>Lao Tzu</p>
+    </div>
+    <div class="grid-item-3"></div>
+    <div class="grid-item-4">
+        <h2 class="important">Title : {{post.title}}</h2>
         <a href="{% url 'like_post' post.pk  %}">
         {% if user in post.liked_users.all %}
             <span style="color: red;"> ♥︎ </span>
@@ -20,35 +26,45 @@
         ({% for each_user in post.liked_users.all %}
             <a href="{% url 'profile' each_user.pk %}">{{each_user.username}}</a> /
         {% endfor %})
-    </h1>
-    {% if post.photo %}
-        <img src="{{post.photo.url}}" alt="" style="width: 600px;"><br>
-    {% endif %}
-    <p>{{post.body|linebreaks}}</p>
-    <h3>Created at {{post.created_date}}</h3>
-    Posted by <a href="{% url 'profile' post.user.pk %}">{{post.user}}</a>
-
-    {% if user.username == post.user.username %}
-        <a href="{% url 'edit' post.pk %}">Edit post</a>
-        <a href="{% url 'delete_post' post.pk %}">Delete post</a>
-    {% endif %}
 
 
-    <hr><h1>Comment</h1>
-    {% for comment in comments %}
-        <p style="border: solid 1px gray">{{comment.body}} /
-        {{comment.created_date}} / <a href="{% url 'profile' comment.user.pk %}">{{comment.user}}</a> /
-        
-        {% if request.user.pk == comment.user.pk %}
-            <a href="{% url 'delete_comment' post.pk comment.pk %}">Delete</a>
+        <p>{{post.body|linebreaks}}</p>
+    </div>
+
+    <div class="grid-item-5 rows">
+        {% if post.photo %}
+            <img src="{{post.photo.url}}" alt="" style="width: 400px; height: 400px;">
+        {% else %}
+            <p id="noimage">No image uploaded yet</p>
         {% endif %}
-        </p>
-    {% endfor %}
-    <form action="{% url 'comment' post.pk %}" method="post">{% csrf_token %}
-        <label for="comment">Comment</label>
-        <textarea type="text" id="comment" name="body">{{comment}}</textarea>
-        <input type="submit" value="submit">
-    </form>
+        <h3>Created at {{post.created_date}}</h3>
+        Posted by <a href="{% url 'profile' post.user.pk %}">{{post.user}}</a>
+    
+        {% if user.username == post.user.username %}
+            <div class="cols">
+                <a href="{% url 'edit' post.pk %}">Edit post</a>
+                <a href="{% url 'delete_post' post.pk %}">Delete post</a>
+            </div>
+        {% endif %}
+    </div>
+    
+    <div class="grid-item-6">
+        <h2>Comment</h2>
+        {% for comment in comments %}
+            <p>{{comment.body}}<br>
+            {{comment.created_date}} / <a href="{% url 'profile' comment.user.pk %}">{{comment.user}}</a> /
+            
+            {% if request.user.pk == comment.user.pk %}
+                <a href="{% url 'delete_comment' post.pk comment.pk %}">Delete</a>
+            {% endif %}
+            </p>
+        {% endfor %}
+        <form action="{% url 'comment' post.pk %}" method="post">{% csrf_token %}
+            <label for="comment">Comment</label>
+            <textarea type="text" id="comment" name="body">{{comment}}</textarea>
+            <input type="submit" value="submit">
+        </form>
+    </div>
 
 
 

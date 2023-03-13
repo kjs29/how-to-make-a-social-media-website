@@ -4,22 +4,35 @@
 
 {% block content %}
 {% include 'navbar.html' %}
+    <!-- Quote -->
+    <div class="grid-item-2">
+        <h2 id="main-quote">"Be yourself; everyone else is already taken."</h2>
+        <p>Oscar Wilde</p>
+    </div>
+    <div class="grid-item-3"></div>
 
-    <h1>{{edit_title}}</h1>
-    <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-        <label for="title">Title</label>
-        <input type="text" name="title" id="title" value="{{post.title}}"><br>
-        <label for="body">Body</label>
-        <textarea type="text" name="body" id="body">{{post.body}}</textarea><br>
-        {% if post.photo %}
-            <img src="{{post.photo.url}}" alt="" style="width: 200px;"><br>
-        {% endif %}
-        {% if post.original_filename %}
-            <p style="color: gray;">Original file : {{ original_filename }}</p>
-            <p><a href="{% url 'delete_photo' post.pk %}">Delete photo</a></p>
-        {% endif %}
-        <label for="file">upload file</label>
-        <input type="file" id="file" name="file" value="{{ original_filename }}"><br>
-        <input type="submit" value="save">
-    </form>
+    <div class="grid-item-4"></div>
+
+    <div class="grid-item-5">
+        <fieldset>
+            <form class="rows" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+                <label for="title">Title</label>
+                <input type="text" name="title" id="title" value="{{post.title}}">
+                <label for="body">Body</label>
+                <textarea type="text" name="body" id="body">{{post.body}}</textarea><br>
+                
+                {% if post.photo %}
+                    <img src="{{post.photo.url}}" alt="" style="width: 200px;"><br>
+                {% endif %}
+                {% if post.original_filename %}
+                    <p style="color: gray;">Original file : {{ original_filename }}</p>
+                    <p><a href="{% url 'delete_photo' post.pk %}">Delete photo</a></p>
+                {% endif %}
+                <label for="file">Upload photo</label>
+                <input type="file" id="file" name="file" value="{{ original_filename }}"><br>
+                <input type="submit" value="save">
+            </form>
+        </fieldset>
+    </div>
+    <div class="grid-item-6"></div>
 {% endblock %}

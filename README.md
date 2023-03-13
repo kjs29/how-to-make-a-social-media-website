@@ -1,6 +1,6 @@
 # Make Your Bed In The Morning
 
-## Social media website
+## Social media website (Django web framework)
 
 <a href="http://kjs3980.pythonanywhere.com" target="_blank">Website link</a>
 

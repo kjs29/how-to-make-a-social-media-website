@@ -23,7 +23,7 @@
         <div><a href="{% url 'logout' %}">Logout</a></div>
     </div>
     {% else %}
-    <div class="rows">
+    <div>
         <form class="rows" action="{% url 'login' %}" method="post">{% csrf_token %}
             <legend>Log in / Sign up</legend>
             <fieldset class="rows">

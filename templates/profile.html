@@ -38,7 +38,11 @@
     <div class="grid-item-4"></div>
 
     <div class="grid-item-5 rows">
+        {% if request.user.pk == user.pk %}
         <h2 class="important">My profile Page</h2>
+        {% else %}
+        <h2 class="important">Profile Page</h2>
+        {% endif %}
         <p>
             {% if request.user.pk == user.pk %}
                 <a href="{% url 'authenticate' request.user.pk %}">Edit</a>

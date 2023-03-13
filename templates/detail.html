@@ -33,7 +33,7 @@
 
     <div class="grid-item-5 rows">
         {% if post.photo %}
-            <img src="{{post.photo.url}}" alt="" style="width: 400px; height: 400px;">
+            <img src="{{post.photo.url}}" alt="User uploaded picture" style="width: 400px; height: 400px;">
         {% else %}
             <p id="noimage">No image uploaded yet</p>
         {% endif %}
@@ -48,7 +48,7 @@
         {% endif %}
     </div>
     
-    <div class="grid-item-6">
+    <div class="grid-item-6 rows">
         <h2>Comment</h2>
         {% for comment in comments %}
             <p>{{comment.body}}<br>
@@ -59,7 +59,7 @@
             {% endif %}
             </p>
         {% endfor %}
-        <form action="{% url 'comment' post.pk %}" method="post">{% csrf_token %}
+        <form class="rows" action="{% url 'comment' post.pk %}" method="post">{% csrf_token %}
             <label for="comment">Comment</label>
             <textarea type="text" id="comment" name="body">{{comment}}</textarea>
             <input type="submit" value="submit">

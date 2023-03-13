@@ -24,7 +24,7 @@
         <div>
             {% for post in posts %}
             {% if post.photo %}
-                <a href="{% url 'detail' post.pk %}"><img src="{{post.photo.url}}" alt="" style="width: 200px;"></a><br>
+                <a href="{% url 'detail' post.pk %}"><img src="{{post.photo.url}}" alt="user uploaded image" style="width: 200px;"></a><br>
             {% endif %}
             <a href="{% url 'detail' post.pk %}">Title : {{post.title}}</a><a href="{% url 'detail' post.pk %}"> ({{post.liked_users.count}} like{{post.liked_users.count|pluralize}} / {{post.comment_set.all.count}} comment{{post.comment_set.all.count|pluralize}} )</a>
             <a href="{% url 'like_post' post.pk  %}">

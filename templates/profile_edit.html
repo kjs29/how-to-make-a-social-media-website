@@ -15,7 +15,7 @@
         <h2>Edit Profile</h2>
         {% if request.user.is_authenticated %}
         <form action="" method="post">{% csrf_token %}
-            <fieldset>
+            <fieldset class="rows">
                 <label for="username">Username</label>
                 <input type="text" name="username" id="username" value="{{username}}">
                 <input type="submit" name="validate-username" value="validate-username"><br>

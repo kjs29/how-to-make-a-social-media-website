@@ -18,7 +18,7 @@
             <fieldset class="rows">
                 <label for="username">Username</label>
                 <input type="text" name="username" id="username" value="{{username}}">
-                <input type="submit" name="validate-username" value="validate-username"><br>
+                <input type="submit" name="validate-username" value="validate-username">
                 {% if messages %}
                 <ul class="messages">
                     {% for message in messages %}
@@ -27,14 +27,14 @@
                 </ul>
                 {% endif %}
                 <label for="email">Email</label>
-                <input type="email" name="email" id="email" value="{{request.user.email}}"><br>
+                <input type="email" name="email" id="email" value="{{request.user.email}}">
                 
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password" value="{{password}}">
-                <input type="submit" name="save" value="save">
+                <input type="submit" name="save" value="Save">
             </fieldset>
         </form>
-        <a class="warning-button" href="{% url 'delete_user' request.user.pk %}">Delete my account</a> (Warning : You can't undo this action.)
+        <a class="warning-button" href="{% url 'delete_user' request.user.pk %}">Delete my account</a> (Warning : Once clicked, it will delete the account without a prompt. You can't undo this action.)
         {% endif %}
     </div>
     <div class="grid-item-6"></div>

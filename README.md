@@ -1,6 +1,15 @@
-# A social media website using Django Web Framework
+# Make Your Bed In The Morning
+
+## Social media website (Django web framework)
 
 <a href="http://kjs3980.pythonanywhere.com" target="_blank">Website link</a>
+
+<p float="left">
+  <img width="400" alt="make your bed in the morning screenshot homepage" src="https://user-images.githubusercontent.com/96529477/224619056-9fa31e50-9f9f-4db6-876d-9a33c737c10b.png">
+  <img width="400" alt="make your bed in the morning screenshot my profile page" src="https://user-images.githubusercontent.com/96529477/224619381-d6674133-66b3-4d74-8880-ad1df5641ab5.png">
+  <img width="400" alt="make your bed in the morning screenshot detail page" src="https://user-images.githubusercontent.com/96529477/224620125-b97e4abf-6651-46f1-98f1-aab24eb0c4ca.png">
+  <img width="400" alt="make your bed in the morning screenshot about page" src="https://user-images.githubusercontent.com/96529477/224620300-8b1bfbf3-8d33-4aba-a00e-df2e4f05a640.png">
+</p>
 
 ## Objective
 
